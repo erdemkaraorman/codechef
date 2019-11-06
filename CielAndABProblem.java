@@ -4,47 +4,46 @@ import java.util.Scanner;
 
 public class CielAndABProblem {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("Hello");
-		CielAndABProblem ciel=new CielAndABProblem();
-		long startTime = System.nanoTime();				
+	public static void main (String[] args) throws java.lang.Exception
+	{
+	// TODO Auto-generated method stub
+	
+		Codechef ciel=new Codechef();
 		Scanner sc =new Scanner(System.in);
-        while(true)                 
-        {
-			System.out.print("Number A:");
-			int A=sc.nextInt();;
-            if(A == 42)            
-                break;
-			System.out.print("Number B:");
-			int B=sc.nextInt();
-			if(B == 42)            
-                break;
-			System.out.println("A-B is " + ciel.AminusB(A,B));
-             
-        }
-		long endTime = System.nanoTime();
-		long totalTime = endTime - startTime;
-        System.out.println("Bye,time in ms:" +totalTime/1000000);
+   		int A=sc.nextInt();
+   		int B=sc.nextInt();
+   		//System.out.println(A-B);
+   		System.out.println(ciel.AminusB(A,B));
 
 	}
 	
 	public int AminusB(int A,int B) {
 		int retVal=0;
+		int temp=A-B;
+		int lastDigit=temp%10;
+		if (lastDigit==9) {
+			temp=temp-1;
+		}else {
+			temp=temp+1;
+		}
+		retVal=temp;
+		return retVal;
+	}
+
+	
+	public int AminusB_charConversion(int A,int B) {
+		int retVal=0;
 		int rightAns=A-B;
 		String rightAnsString = String.valueOf(rightAns);			
 		char[] digits = rightAnsString.toCharArray();
-		if (digits.length==1){
-			return 0;
-		}
 		
-		for (int i=1;i<digits.length;i++) {
-			if(digits[i]!='0' && digits[i]!=digits[i-1]) {
-				char temp=digits[i-1];
-				digits[i-1]=digits[i];
-				digits[i]=temp;
-				break;
+		for (int i=0;i<digits.length;i++) {
+			if(digits[i]=='9') {
+				digits[i]='1';				
+			}else {
+				digits[i]=String.valueOf(Character.getNumericValue(digits[i])).toCharArray()[0];		
 			}
+			break;
 		}
 		String digitsStr=String.copyValueOf(digits);
 		retVal=Integer.valueOf(digitsStr);	
